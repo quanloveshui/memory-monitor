@@ -1,0 +1,42 @@
+{% load static %} 
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <title>内存监控信息</title> 
+    <script src="{% static 'jquery-1.8.3.min.js' %}"></script> 
+    <script src="{% static 'highstock.js' %}"></script> 
+    <script src="{% static 'exporting.js' %}"></script> 
+    <script src="{% static 'highcharts-zh_CN.js' %}"></script> 
+</head> 
+<body> 
+    <div id="container" style="min-width:400px; height:400px"></div> 
+    <script> 
+   $(function () {
+
+    Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
+    $.getJSON('/mem/data', function (data) {
+
+        $('#container').highcharts('StockChart', {
+            rangeSelector : {
+                selected : 1
+            },
+            title : {
+                text : 'memory data'
+            },
+            series : [{
+                name : 'memory',
+                data : data,
+
+            }]
+        });
+    });
+});
+</script>
+    </script> 
+</body> 
+</html> 
